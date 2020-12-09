@@ -1,0 +1,65 @@
+SELECT distinct dgau.gpo, desp.nom FROM  dgau 
+INNER JOIN dlis ON dgau.gpo = dlis.gpo && dgau.mat = dlis.mat
+INNER JOIN dalu ON dlis.ctr = dalu.ctr 
+INNER JOIN desp ON dalu.esp = desp.cve 
+WHERE desp.cve = 4;
+
+SELECT  distinct dgau.gpo, desp.nom, dalu.ctr FROM  dgau 
+INNER JOIN dlis ON dgau.gpo = dlis.gpo && dgau.mat = dlis.mat
+INNER JOIN dalu ON dlis.ctr = dalu.ctr 
+INNER JOIN desp ON dalu.esp = desp.cve 
+WHERE dgau.gpo = '+H' ORDER BY dalu.ctr;
+
+SELECT distinct dret.cve, desp.cve FROM dret 
+INNER JOIN dgau ON dret.cve = dgau.mat 
+INNER JOIN dlis ON dgau.gpo = dlis.gpo && dgau.mat = dlis.mat
+INNER JOIN dalu ON dlis.ctr = dalu.ctr 
+INNER JOIN desp ON dalu.esp = desp.cve WHERE dret.cve = '0R2';
+
+143z0222
+
+SELECT dlis.ctr, dlis.gpo FROM dlis WHERE dlis.ctr = '143z0222'
+
+
+SELECT distinct nosie.clave, 
+nosie.nombre, 
+matsie.cve, 
+matsie.clave_asignatura, 
+dlis.gpo,
+desp.cve
+FROM 
+nosie INNER JOIN matsie ON nosie.clave = matsie.clave_asignatura
+INNER JOIN dlis ON matsie.cve = dlis.mat
+INNER JOIN dalu ON dlis.ctr = dalu.ctr 
+INNER JOIN desp ON dalu.esp = desp.cve ORDER BY desp.cve
+
+INSERT INTO trash (constante, control, gpo)
+SELECT 'Hola', dlis.ctr, dlis.gpo FROM dlis WHERE dlis.ctr = "163Z0204"
+
+SELECT nosie.clave AS 'Clave actual', 
+nosie.nombre AS 'Nombre Materia', 
+matsie.cve AS 'Clave sie', 
+matsie.clave_asignatura AS 'Clave SIEVISUAL' FROM nosie LEFT JOIN matsie on nosie.clave = matsie.clave_asignatura ORDER BY nosie.clave
+
+
+SELECT nosie.clave AS 'Clave actual', 
+nosie.nombre AS 'Nombre Materia', 
+matsie.cve AS 'Clave sie', 
+matsie.clave_asignatura AS 'Clave SIEVISUAL' FROM nosie LEFT JOIN matsie on nosie.clave = matsie.clave_asignatura UNION SELECT nosie.clave AS 'Clave actual', 
+nosie.nombre AS 'Nombre Materia', 
+matsie.cve AS 'Clave sie', 
+matsie.clave_asignatura AS 'Clave SIEVISUAL' FROM nosie RIGHT JOIN matsie on nosie.clave = matsie.clave_asignatura
+
+SELECT distinct
+dlis.mat, 
+matsie.clave_asignatura,
+matsie.clave_asignatura,
+desp.cve
+FROM
+desp
+INNER JOIN dalu
+ON desp.cve = dalu.esp
+INNER JOIN dlis
+ON dalu.ctr = dlis.ctr
+INNER JOIN matsie
+ON dlis.mat = matsie.cve
