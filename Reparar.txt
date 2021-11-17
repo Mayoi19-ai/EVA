@@ -1,0 +1,60 @@
+6GM6666666666666666
+
+
+use proyecto;
+select * from periodo;
+
+//Ver inscripciones que ya se evaluaron
+select evaluo.id
+from evaluo
+inner join inscripcion on evaluo.id = inscripcion.id
+inner join curso on inscripcion.id_curso = curso.id
+inner join grupo on curso.nombre_grupo = grupo.nombre and curso.id_periodo = grupo.id_periodo and curso.id_carrera = grupo.id_carrera
+inner join periodo on grupo.id_periodo = periodo.id
+where periodo.id = #id;
+
+//Ver respuestas_evaluacion ingresadas
+select respuestas_evaluacion.id_curso
+from respuestas_evaluacion
+inner join curso on respuestas_evaluacion.id_curso = curso.id
+inner join grupo on curso.nombre_grupo = grupo.nombre and curso.id_periodo = grupo.id_periodo and curso.id_carrera = grupo.id_carrera
+inner join periodo on grupo.id_periodo = periodo.id
+where periodo.id = #id;
+
+//eliminar registro de la tabla evaluo
+delete evaluo.id, evaluo.clave
+from evaluo
+inner join inscripcion on evaluo.id = inscripcion.id
+inner join curso on inscripcion.id_curso = curso.id
+inner join grupo on curso.nombre_grupo = grupo.nombre and curso.id_periodo = grupo.id_periodo and curso.id_carrera = grupo.id_carrera
+inner join periodo on grupo.id_periodo = periodo.id
+where periodo.id = #id;
+
+//eliminar registro de la tabla respuestas_evaluacion
+delete respuestas_evaluacion.id_curso, respuestas_evaluacion.respuestas
+from respuestas_evaluacion
+inner join curso on respuestas_evaluacion.id_curso = curso.id
+inner join grupo on curso.nombre_grupo = grupo.nombre and curso.id_periodo = grupo.id_periodo and curso.id_carrera = grupo.id_carrera
+inner join periodo on grupo.id_periodo = periodo.id
+where periodo.id = #id;
+
+//eliminar registro de la tabla inscripcion
+delete inscripcion.id, inscripcion.id_curso, inscripcion.alumno_control, inscripcion.activar
+from inscripcion
+inner join curso on inscripcion.id_curso = curso.id
+inner join grupo on curso.nombre_grupo = grupo.nombre and curso.id_periodo = grupo.id_periodo and curso.id_carrera = grupo.id_carrera
+inner join periodo on grupo.id_periodo = periodo.id
+where periodo.id = #id;
+
+//eliminar registro de la tabla curso
+delete curso.id, curso.nombre_grupo, curso.id_periodo, curso.id_carrera, curso.clave_asignatura, curso.folio_docente
+from curso
+inner join grupo on curso.nombre_grupo = grupo.nombre and curso.id_periodo = grupo.id_periodo and curso.id_carrera = grupo.id_carrera
+inner join periodo on grupo.id_periodo = periodo.id
+where periodo.id = #id;
+
+//eliminar registro de la tabla grupo
+delete grupo.nombre, grupo.id_periodo, grupo.id_carrer, grupo.id_modalidad, grupo.id_campus
+from grupo
+inner join periodo on grupo.id_periodo = periodo.id
+where periodo.id = #id;
